@@ -60,20 +60,28 @@ public class TerminalController {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
 	}
+
 	@PostMapping("/playGame/{cardId}")
 	public ResponseEntity<?> playGame(@PathVariable int cardId, @RequestBody PlayGameRequest request) {
-	    try {
-	        Card updatedCard = terminalService.playGame(
-	            cardId,
-	            request.getCreditsToDeduct(),
-	            request.getTicketsToAdd()
-	        );
-	        return ResponseEntity.ok(updatedCard);  // Return the updated card
-	    } catch (RuntimeException e) {
-	        return ResponseEntity.badRequest().body(e.getMessage());  // Return error message
-	    }
+		try {
+			Card updatedCard = terminalService.playGame(cardId, request.getCreditsToDeduct(),
+					request.getTicketsToAdd());
+			return ResponseEntity.ok(updatedCard); // Return the updated card
+		} catch (RuntimeException e) {
+			return ResponseEntity.badRequest().body(e.getMessage()); // Return error message
+		}
 	}
-	
+
+	@PostMapping("/requestPrize")
+	public ResponseEntity<String> requestPrize(@RequestBody PrizeRequest request) {
+		try {
+			terminalService.requestPrize(request.getCardId(), request.getPrizeNumber());
+			return ResponseEntity.ok("獎品兌換成功！");
+		} catch (RuntimeException e) {
+			return ResponseEntity.badRequest().body(e.getMessage());
+		}
+	}
+
 //	   @PostMapping("/transferCredits")
 //	    public ResponseEntity<String> transferCredits(@RequestBody TransferRequest request) {
 //	        try {
@@ -122,13 +130,5 @@ public class TerminalController {
 //	        }
 //	    }
 //	}
-	 @PostMapping("/requestPrize")
-	    public ResponseEntity<String> requestPrize(@RequestBody PrizeRequest request) {
-	        try {
-	            terminalService.requestPrize(request.getCardId(), request.getPrizeNumber());
-	            return ResponseEntity.ok("Prize redeemed successfully");
-	        } catch (RuntimeException e) {
-	            return ResponseEntity.badRequest().body(e.getMessage());
-	        }
-	    }
+
 }

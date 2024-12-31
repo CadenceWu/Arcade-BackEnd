@@ -54,6 +54,27 @@ public class TerminalService {
 		targetCard.setTicketBalance(targetCard.getTicketBalance() + sourceCard.getTicketBalance());
 		sourceCard.setTicketBalance(0);
 	}
+	
+	public Card playGame(int cardId, int creditsToDeduct, int ticketsToAdd) {
+		if (creditsToDeduct <= 0) {
+			throw new IllegalArgumentException("creditsToDeduct must be greater than zero");
+		}
+
+		Card card = cardService.getCard(cardId);
+
+		if (card.getCreditBalance() < creditsToDeduct) {
+			throw new IllegalArgumentException("Not enough credits");
+		}
+
+		card.setCreditBalance(card.getCreditBalance() - creditsToDeduct);
+
+		if (ticketsToAdd > 0) {
+			card.setTicketBalance(card.getTicketBalance() + ticketsToAdd);
+		}
+
+		return cardService.save(card);
+	}
+	
 
 	public void requestPrize(int cardId, int prizeNumber) {
 		Card card = cardService.getCard(cardId);
@@ -82,25 +103,7 @@ public class TerminalService {
 		prizeCategoryService.savePrize(prize);
 	}
 
-	public Card playGame(int cardId, int creditsToDeduct, int ticketsToAdd) {
-		if (creditsToDeduct <= 0) {
-			throw new IllegalArgumentException("creditsToDeduct must be greater than zero");
-		}
-
-		Card card = cardService.getCard(cardId);
-
-		if (card.getCreditBalance() < creditsToDeduct) {
-			throw new IllegalArgumentException("Not enough credits");
-		}
-
-		card.setCreditBalance(card.getCreditBalance() - creditsToDeduct);
-
-		if (ticketsToAdd > 0) {
-			card.setTicketBalance(card.getTicketBalance() + ticketsToAdd);
-		}
-
-		return cardService.save(card);
-	}
+	
 
 //  public void transferCredits(Card sourceCard, Card targetCard, int amount) {
 //  if (sourceCard == null || targetCard == null) {
