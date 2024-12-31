@@ -41,9 +41,4 @@ public class GameController {
         service.deleteGame(gameNumber);
     }
 	
-	
-	@GetMapping("/")
-	public String greet() {
-		return "It finally works!!!";
-	}
 }

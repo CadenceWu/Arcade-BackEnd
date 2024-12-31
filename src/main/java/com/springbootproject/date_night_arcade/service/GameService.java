@@ -12,33 +12,33 @@ import com.springbootproject.date_night_arcade.repo.GameRepo;
 
 @Service
 public class GameService {
-	
+
 	@Autowired
 	private GameRepo repo;
-	
-	public List<Game> getGames(){
+
+	public List<Game> getGames() {
 		return repo.findAll();
 	}
 
-	 public Game createGame(Game game) {
-	        return repo.save(game);
-	    }
-	    
-	    public Game updateGame(int gameNumber, Game updatedGame) {  
-	        Game existingGame = repo.findById(gameNumber)
-	            .orElseThrow(() -> new RuntimeException("Game not found with number: " + gameNumber));
-	            
-	        // Update the fields
-	        existingGame.setCreditNeeded(updatedGame.getCreditNeeded());
-	        existingGame.setTicketWon(updatedGame.getTicketWon());
-	        
-	        return repo.save(existingGame);
-	    }
-	    
-	    public void deleteGame(int gameNumber) {  
-	        Game game = repo.findById(gameNumber)
-	            .orElseThrow(() -> new RuntimeException("Game not found with number: " + gameNumber));
-	            
-	        repo.delete(game);
-	    }
+	public Game createGame(Game game) {
+		return repo.save(game);
+	}
+
+	public Game updateGame(int gameNumber, Game updatedGame) {
+		Game existingGame = repo.findById(gameNumber)
+				.orElseThrow(() -> new RuntimeException("Game not found with number: " + gameNumber));
+
+		// Update the fields
+		existingGame.setCreditNeeded(updatedGame.getCreditNeeded());
+		existingGame.setTicketWon(updatedGame.getTicketWon());
+
+		return repo.save(existingGame);
+	}
+
+	public void deleteGame(int gameNumber) {
+		Game game = repo.findById(gameNumber)
+				.orElseThrow(() -> new RuntimeException("Game not found with number: " + gameNumber));
+
+		repo.delete(game);
+	}
 }

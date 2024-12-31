@@ -1,5 +1,8 @@
 package com.springbootproject.date_night_arcade.model;
 
+//DTO(Data Transfer Object)
+//The TransferRequest class only contains the relevant information required to perform the transfer.
+//The Card class is tied to the database structure and may contain unnecessary fields for the transfer process
 public class TransferRequest {
     private int sourceCardId;
     private int targetCardId;
@@ -13,7 +16,6 @@ public class TransferRequest {
 		this.amount = amount;
 	}
 
-	// Getters and Setters
     public int getSourceCardId() {
         return sourceCardId;
     }

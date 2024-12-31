@@ -28,20 +28,19 @@ public class CardController {
 
 	@GetMapping("/cards")
 	public List<Card> getAllCards() {
-		// System.out.println("Getting all prizes");
 		return service.getAllCards();
 	}
 
 	@PostMapping("/cards")
 	public Card createCard(@RequestBody Card card) {
-		System.out.println("Received Card: " + card);
 		return service.createCard(card);
 	}
 
-	@PutMapping("/cards/{cardId}")
+	@PutMapping("/cards/{cardId}/increment")
 	public Card addCredits(@PathVariable int cardId, @RequestBody Map<String, Integer> request) {
 		return service.addCredits(cardId, request.get("amount"));
 	}
+	
 	@PutMapping("/cards/{cardId}/decrement")
 	public Card decrementCredits(@PathVariable int cardId, @RequestBody Map<String, Integer> request) {
 	    Integer amount = request.get("amount");
@@ -70,14 +69,25 @@ public class CardController {
 		}
 	}
 //	@PutMapping("/cards/{cardId}/play")
-//	public Card addTickets(@PathVariable int cardId, @RequestBody Map<String, Integer> request) {
-//	    Integer amount = request.get("amount");
-//	    if (amount == null || amount <= 0) {
-//	        throw new IllegalArgumentException("Amount must be greater than zero");
+//	public Card playGame(@PathVariable int cardId, @RequestBody Map<String, Integer> request) {
+//	    Integer creditsToDeduct = request.get("creditsToDeduct");
+//	    Integer ticketsToAdd = request.get("ticketsToAdd");
+//
+//	    if (creditsToDeduct == null || creditsToDeduct <= 0) {
+//	        throw new IllegalArgumentException("creditsToDeduct must be greater than zero");
 //	    }
+//
 //	    Card card = service.getCard(cardId);
-//	    card.setTicketBalance(card.getTicketBalance() + amount);
-//	    return service.createCard(card);
+//	    if (card.getCreditBalance() < creditsToDeduct) {
+//	        throw new IllegalArgumentException("Not enough credits");
+//	    }
+//
+//	    card.setCreditBalance(card.getCreditBalance() - creditsToDeduct);
+//
+//	    if (ticketsToAdd != null && ticketsToAdd > 0) {
+//	        card.setTicketBalance(card.getTicketBalance() + ticketsToAdd);
+//	    }
+//
+//	    return service.save(card);
 //	}
-
 }

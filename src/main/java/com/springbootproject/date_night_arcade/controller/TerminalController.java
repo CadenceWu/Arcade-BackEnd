@@ -2,13 +2,16 @@ package com.springbootproject.date_night_arcade.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.springbootproject.date_night_arcade.model.Card;
+import com.springbootproject.date_night_arcade.model.PlayGameRequest;
 import com.springbootproject.date_night_arcade.model.PrizeRequest;
 import com.springbootproject.date_night_arcade.model.TransferRequest;
 import com.springbootproject.date_night_arcade.service.CardService;
@@ -56,6 +59,19 @@ public class TerminalController {
 		} catch (RuntimeException e) {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
+	}
+	@PostMapping("/playGame/{cardId}")
+	public ResponseEntity<?> playGame(@PathVariable int cardId, @RequestBody PlayGameRequest request) {
+	    try {
+	        Card updatedCard = terminalService.playGame(
+	            cardId,
+	            request.getCreditsToDeduct(),
+	            request.getTicketsToAdd()
+	        );
+	        return ResponseEntity.ok(updatedCard);  // Return the updated card
+	    } catch (RuntimeException e) {
+	        return ResponseEntity.badRequest().body(e.getMessage());  // Return error message
+	    }
 	}
 	
 //	   @PostMapping("/transferCredits")
