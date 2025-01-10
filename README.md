@@ -33,9 +33,6 @@ classDiagram
     UserService --> UserRepository : uses
     User "1" --> "*" UserRepository : dependency
 
-
-
-
 ---
 
 ### **Explanation of the Diagram**
@@ -49,7 +46,3 @@ classDiagram
 
 ---
 
-### Rendered Class Diagram
-If you're using GitHub or another platform that supports Mermaid, this code will render a graphical class diagram. Otherwise, you can use tools like [PlantUML](https://plantuml.com/) or [Lucidchart](https://www.lucidchart.com/) for manual drawing.
-
-Let me know if you’d like a visual representation or adjustments! 😊
