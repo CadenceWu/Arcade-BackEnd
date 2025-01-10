@@ -51,3 +51,42 @@ classDiagram
     CardController --> CardService : uses
 
 
+
+    class Game {
+        - int gameNumber
+        - String gameName
+        - int creditNeeded
+        - int ticketWon
+        + getGameNumber() int
+        + setGameNumber(gameNumber : int) void
+        + getGameName() String
+        + setGameName(gameName : String) void
+        + getCreditNeeded() int
+        + setCreditNeeded(creditNeeded : int) void
+        + getTicketWon() int
+        + setTicketWon(ticketWon : int) void
+        + toString() String
+    }
+    
+    class GameRepo {
+        <<interface>>
+    }
+    GameRepo ..> Game : manages
+    
+    class GameService {
+        - GameRepo repo
+        + getGames() List~Game~
+        + createGame(game : Game) Game
+        + updateGame(gameNumber : int, updatedGame : Game) Game
+        + deleteGame(gameNumber : int) void
+    }
+    GameService ..> GameRepo : uses
+
+    class GameController {
+        - GameService service
+        + getGames() List~Game~
+        + createGame(game : Game) Game
+        + updateGame(gameNumber : int, game : Game) Game
+        + deleteGame(gameNumber : int) void
+    }
+    GameController ..> GameService : calls
