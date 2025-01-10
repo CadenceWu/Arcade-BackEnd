@@ -105,6 +105,7 @@ classDiagram
 		+ consumeItem() void
     }
 	
+
 	class PrizeCategoryRepo {
 		<<interface>>
 	}
