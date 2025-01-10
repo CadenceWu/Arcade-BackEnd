@@ -35,8 +35,9 @@ public class CardController {
 	public Card createCard(@RequestBody Card card) {
 		return service.createCard(card);
 	}
-
+			
 	@PutMapping("/cards/{cardId}/increment")
+	//only need to update amount. JSON: {"amount":50}
 	public Card addCredits(@PathVariable int cardId, @RequestBody Map<String, Integer> request) {
 		return service.addCredits(cardId, request.get("amount"));
 	}
@@ -49,6 +50,7 @@ public class CardController {
 	    }
 	    return service.decrementCredits(cardId, amount);
 	}
+	
     @DeleteMapping("/cards/{cardId}")
     public void deleteGame(@PathVariable int cardId) { 
         service.deleteGame(cardId);
@@ -60,6 +62,7 @@ public class CardController {
 	}
 
 	@GetMapping("/cards/{cardId}")
+	//Better control over HTTP responses, can only use Card
 	public ResponseEntity<Card> getCardById(@PathVariable int cardId) {
 		try {
 			Card card = service.getCard(cardId);

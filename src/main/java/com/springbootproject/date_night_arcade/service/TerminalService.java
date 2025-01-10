@@ -37,6 +37,7 @@ public class TerminalService {
 		targetCard.setCreditBalance(targetCard.getCreditBalance() + amount);
 		sourceCard.setCreditBalance(sourceCard.getCreditBalance() - amount);
 	}
+	
 
 	public void transferTickets(Card sourceCard, Card targetCard, int amount) {
 		if (sourceCard == null || targetCard == null) {
@@ -59,6 +60,7 @@ public class TerminalService {
 		sourceCard.setTicketBalance(sourceCard.getTicketBalance() - amount);
 	}
 
+	
 	public Card playGame(int cardId, int creditsToDeduct, int ticketsToAdd) {
 		if (creditsToDeduct <= 0) {
 			throw new IllegalArgumentException("creditsToDeduct must be greater than zero");

@@ -27,6 +27,7 @@ public class GameController {
 		return service.getGames();
 	}
 	@PostMapping("/games")
+	//update a complete Game object. JSON{"creditNeeded":5, "ticketWon":100}
     public Game createGame(@RequestBody Game game) {
         return service.createGame(game);
     }
