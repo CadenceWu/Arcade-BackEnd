@@ -23,7 +23,7 @@ import com.springbootproject.date_night_arcade.service.PrizeCategoryService;
 @RequestMapping("/api")
 public class CardController {
 
-	@Autowired
+	@Autowired 
 	private CardService service;
 
 	@GetMapping("/cards")
@@ -68,26 +68,5 @@ public class CardController {
 			return ResponseEntity.notFound().build();
 		}
 	}
-//	@PutMapping("/cards/{cardId}/play")
-//	public Card playGame(@PathVariable int cardId, @RequestBody Map<String, Integer> request) {
-//	    Integer creditsToDeduct = request.get("creditsToDeduct");
-//	    Integer ticketsToAdd = request.get("ticketsToAdd");
-//
-//	    if (creditsToDeduct == null || creditsToDeduct <= 0) {
-//	        throw new IllegalArgumentException("creditsToDeduct must be greater than zero");
-//	    }
-//
-//	    Card card = service.getCard(cardId);
-//	    if (card.getCreditBalance() < creditsToDeduct) {
-//	        throw new IllegalArgumentException("Not enough credits");
-//	    }
-//
-//	    card.setCreditBalance(card.getCreditBalance() - creditsToDeduct);
-//
-//	    if (ticketsToAdd != null && ticketsToAdd > 0) {
-//	        card.setTicketBalance(card.getTicketBalance() + ticketsToAdd);
-//	    }
-//
-//	    return service.save(card);
-//	}
+
 }

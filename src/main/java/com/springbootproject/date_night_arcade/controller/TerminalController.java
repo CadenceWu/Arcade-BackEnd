@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.springbootproject.date_night_arcade.dto.PlayGameRequest;
+import com.springbootproject.date_night_arcade.dto.PrizeRequest;
+import com.springbootproject.date_night_arcade.dto.TransferRequest;
 import com.springbootproject.date_night_arcade.model.Card;
-import com.springbootproject.date_night_arcade.model.PlayGameRequest;
-import com.springbootproject.date_night_arcade.model.PrizeRequest;
-import com.springbootproject.date_night_arcade.model.TransferRequest;
 import com.springbootproject.date_night_arcade.service.CardService;
 import com.springbootproject.date_night_arcade.service.TerminalService;
 
@@ -35,9 +35,9 @@ public class TerminalController {
 			Card sourceCard = cardService.getCard(request.getSourceCardId());
 			Card targetCard = cardService.getCard(request.getTargetCardId());
 
-			terminalService.transferCredits(sourceCard, targetCard);
-			cardService.save(sourceCard);
-			cardService.save(targetCard);
+			terminalService.transferCredits(sourceCard, targetCard,request.getAmount());
+			cardService.saveCard(sourceCard);
+			cardService.saveCard(targetCard);
 
 			return ResponseEntity.ok("Credits transferred successfully");
 		} catch (RuntimeException e) {
@@ -51,9 +51,9 @@ public class TerminalController {
 			Card sourceCard = cardService.getCard(request.getSourceCardId());
 			Card targetCard = cardService.getCard(request.getTargetCardId());
 
-			terminalService.transferTickets(sourceCard, targetCard);
-			cardService.save(sourceCard);
-			cardService.save(targetCard);
+			terminalService.transferTickets(sourceCard, targetCard,request.getAmount());
+			cardService.saveCard(sourceCard);
+			cardService.saveCard(targetCard);
 
 			return ResponseEntity.ok("Tickets transferred successfully");
 		} catch (RuntimeException e) {
@@ -81,54 +81,5 @@ public class TerminalController {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
 	}
-
-//	   @PostMapping("/transferCredits")
-//	    public ResponseEntity<String> transferCredits(@RequestBody TransferRequest request) {
-//	        try {
-//	            Card sourceCard = cardService.getCard(request.getSourceCardId());
-//	            Card targetCard = cardService.getCard(request.getTargetCardId());
-//
-//	            if (sourceCard.getCreditBalance() < request.getAmount()) {
-//	                return ResponseEntity.badRequest().body("來源卡片餘額不足");
-//	            }
-//
-//	            // Update balances
-//	            sourceCard.setCreditBalance(sourceCard.getCreditBalance() - request.getAmount());
-//	            targetCard.setCreditBalance(targetCard.getCreditBalance() + request.getAmount());
-//
-//	            // Save changes
-//	            cardService.createCard(sourceCard);
-//	            cardService.createCard(targetCard);
-//
-//	            return ResponseEntity.ok("轉換成功");
-//	        } catch (Exception e) {
-//	            return ResponseEntity.badRequest().body(e.getMessage());
-//	        }
-//	    }
-//
-//	    @PostMapping("/transferTickets")
-//	    public ResponseEntity<String> transferTickets(@RequestBody TransferRequest request) {
-//	        try {
-//	            Card sourceCard = cardService.getCard(request.getSourceCardId());
-//	            Card targetCard = cardService.getCard(request.getTargetCardId());
-//
-//	            if (sourceCard.getTicketBalance() < request.getAmount()) {
-//	                return ResponseEntity.badRequest().body("來源卡片票券不足");
-//	            }
-//
-//	            // Update balances
-//	            sourceCard.setTicketBalance(sourceCard.getTicketBalance() - request.getAmount());
-//	            targetCard.setTicketBalance(targetCard.getTicketBalance() + request.getAmount());
-//
-//	            // Save changes
-//	            cardService.createCard(sourceCard);
-//	            cardService.createCard(targetCard);
-//
-//	            return ResponseEntity.ok("轉換成功");
-//	        } catch (Exception e) {
-//	            return ResponseEntity.badRequest().body(e.getMessage());
-//	        }
-//	    }
-//	}
 
 }
