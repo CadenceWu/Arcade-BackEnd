@@ -9,46 +9,42 @@ classDiagram
         - int ticketBalance
         + Card()
         + getCardId() int
-        + setCardId(int)
+        + setCardId(cardId : int) void
         + getCreditBalance() int
-        + setCreditBalance(int)
+        + setCreditBalance(creditBalance : int) void
         + getTicketBalance() int
-        + setTicketBalance(int)
+        + setTicketBalance(ticketBalance : int) void
         + toString() String
     }
 
     class CardRepo {
-        + findAll() : List<Card>
-        + save(Card) : Card
-        + findById(int) : Optional<Card>
-        + deleteById(int) : void
+		<<interface>>
     }
-
+	CardRepo ..> Card : manages
+	
     class CardService {
         - CardRepo repo
-        + getAllCards() : List<Card>
-        + createCard(Card) : Card
-        + addCredits(int, Integer) : Card
-        + decrementCredits(int, Integer) : Card
-        + getCard(int) : Card
-        + saveCard(Card) : Card
-        + deleteGame(int) : void
+        + getAllCards() : List~Card~
+        + createCard(card : Card) : Card
+        + addCredits(cardId : int, amount : Integer) : Card
+        + decrementCredits(cardId : int, amount : Integer) : Card
+        + getCard(cardId : int) : Card
+        + saveCard(card : Card) : Card
+        + deleteGame(cardId : int) : void
     }
+	CardService ..> CardRepo : uses
 
     class CardController {
         - CardService service
-        + getAllCards() : List<Card>
-        + createCard(Card) : Card
-        + addCredits(int, Map<String, Integer>) : Card
-        + decrementCredits(int, Map<String, Integer>) : Card
-        + deleteGame(int) : void
-        + getCard(int) : Card
-        + getCardById(int) : ResponseEntity<Card>
+        + getAllCards() : List~Card~
+        + createCard(card : Card) : Card
+        + addCredits(cardId : int, request : Map~String, Integer~) : Card
+        + decrementCredits(cardId: int, request : Map~String, Integer~) : Card
+        + deleteGame(cardId: int) : void
+        + getCard(cardId: int) : Card
+        + getCardById(cardId: int) : ResponseEntity<Card>
     }
-
-    CardRepo --> Card : manages
-    CardService --> CardRepo : uses
-    CardController --> CardService : uses
+    CardController ..> CardService : calls
 
 
 
