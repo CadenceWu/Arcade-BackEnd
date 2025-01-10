@@ -1,4 +1,4 @@
-package com.springbootproject.date_night_arcade.model;
+package com.springbootproject.date_night_arcade.dto;
 
 public class PlayGameRequest {
 	private int cardId;

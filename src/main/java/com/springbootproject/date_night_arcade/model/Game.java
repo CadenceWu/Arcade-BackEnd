@@ -60,15 +60,4 @@ public class Game {
 		this.ticketWon = ticketWon;
 	}
 
-	// Creata a playGame method with the card objects
-	public void playGame(Card c) {
-		if (c.getCreditBalance() < getCreditNeeded()) {
-			System.out.println("Insufficient credits for card number " + c.getCardId());
-			c.getTicketBalance();
-		} else {
-			c.setCreditBalance(c.getCreditBalance() - getCreditNeeded());
-			System.out.println(creditNeeded + " Credits has been cut " + " in card: " + c.getCardId());
-			c.setTicketBalance(c.getTicketBalance() + getTicketWon());
-		}
-	}
 }

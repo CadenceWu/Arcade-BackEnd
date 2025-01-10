@@ -14,13 +14,13 @@ public class Card {
 	@Id
 	@Column(name = "card_id")
 	private int cardId;
+	private int creditBalance;
+	private int ticketBalance;
+	
 	@Override
 	public String toString() {
 		return "Card [cardId=" + cardId + ", creditBalance=" + creditBalance + ", ticketBalance=" + ticketBalance + "]";
 	}
-
-	private int creditBalance;
-	private int ticketBalance;
 
 	public Card() {
         this.creditBalance = 0;

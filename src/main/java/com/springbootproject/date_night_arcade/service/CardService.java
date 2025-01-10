@@ -7,10 +7,10 @@ import org.springframework.stereotype.Service;
 import com.springbootproject.date_night_arcade.model.Card;
 import com.springbootproject.date_night_arcade.repo.CardRepo;
 
-@Service
+@Service  //Often used to contain business logic
 public class CardService {
-	@Autowired
-	private CardRepo repo;
+	@Autowired  //dependency injection. Automatically injects a bean into the class where it is declared.
+	private CardRepo repo; //CardRepo(required bean). CardService(target class)
 
 	public List<Card> getAllCards() {
 		return repo.findAll();
@@ -42,7 +42,7 @@ public class CardService {
 		return repo.findById(cardId).orElseThrow(() -> new RuntimeException("Card not found with ID: " + cardId));
 	}
 
-	public Card save(Card card) {
+	public Card saveCard(Card card) {
 		return repo.save(card);
 	}
 

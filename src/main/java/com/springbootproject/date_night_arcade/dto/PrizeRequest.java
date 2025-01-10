@@ -1,10 +1,10 @@
-package com.springbootproject.date_night_arcade.model;
+package com.springbootproject.date_night_arcade.dto;
 
 public class PrizeRequest {
     private int cardId;
     private int prizeNumber;
 
-    // Getters and Setters
+ 
     public int getCardId() {
         return cardId;
     }

@@ -17,44 +17,48 @@ public class TerminalService {
 	@Autowired
 	private PrizeCategoryService prizeCategoryService;
 
-	/* 轉換卡片裡全部的代碼 */
-	public void transferCredits(Card sourceCard, Card targetCard) {
+	public void transferCredits(Card sourceCard, Card targetCard, int amount) {
 		if (sourceCard == null || targetCard == null) {
-			throw new RuntimeException("Both source and target cards must exist");
+			throw new RuntimeException("來源卡片或目標卡片不存在");
 		}
 
-		// Add validation for same card
 		if (sourceCard.getCardId() == targetCard.getCardId()) {
-			throw new RuntimeException("Source and target cards cannot be the same");
+			throw new RuntimeException("來源卡片及目標卡片不能相同");
 		}
 
-		if (sourceCard.getCreditBalance() <= 0) {
-			throw new RuntimeException("Source card has no credits to transfer");
+		if (amount <= 0) {
+			throw new RuntimeException("轉換數量必須大於0");
 		}
 
-		targetCard.setCreditBalance(targetCard.getCreditBalance() + sourceCard.getCreditBalance());
-		sourceCard.setCreditBalance(0);
+		if (sourceCard.getCreditBalance() < amount) {
+			throw new RuntimeException("來源卡片代碼不足");
+		}
+
+		targetCard.setCreditBalance(targetCard.getCreditBalance() + amount);
+		sourceCard.setCreditBalance(sourceCard.getCreditBalance() - amount);
 	}
 
-	/* 轉換全部的票券 */
-	public void transferTickets(Card sourceCard, Card targetCard) {
+	public void transferTickets(Card sourceCard, Card targetCard, int amount) {
 		if (sourceCard == null || targetCard == null) {
-			throw new RuntimeException("Both source and target cards must exist");
+			throw new RuntimeException("來源卡片或目標卡片不存在");
 		}
 
-		// Add validation for same card
 		if (sourceCard.getCardId() == targetCard.getCardId()) {
-			throw new RuntimeException("Source and target cards cannot be the same");
+			throw new RuntimeException("來源卡片及目標卡片不能相同");
 		}
 
-		if (sourceCard.getTicketBalance() <= 0) {
-			throw new RuntimeException("Source card has no tickets to transfer");
+		if (amount <= 0) {
+			throw new RuntimeException("轉換數量必須大於0");
 		}
 
-		targetCard.setTicketBalance(targetCard.getTicketBalance() + sourceCard.getTicketBalance());
-		sourceCard.setTicketBalance(0);
+		if (sourceCard.getTicketBalance() < amount) {
+			throw new RuntimeException("來源卡片票券不足");
+		}
+
+		targetCard.setTicketBalance(targetCard.getTicketBalance() + amount);
+		sourceCard.setTicketBalance(sourceCard.getTicketBalance() - amount);
 	}
-	
+
 	public Card playGame(int cardId, int creditsToDeduct, int ticketsToAdd) {
 		if (creditsToDeduct <= 0) {
 			throw new IllegalArgumentException("creditsToDeduct must be greater than zero");
@@ -72,9 +76,8 @@ public class TerminalService {
 			card.setTicketBalance(card.getTicketBalance() + ticketsToAdd);
 		}
 
-		return cardService.save(card);
+		return cardService.saveCard(card);
 	}
-	
 
 	public void requestPrize(int cardId, int prizeNumber) {
 		Card card = cardService.getCard(cardId);
@@ -99,43 +102,8 @@ public class TerminalService {
 		prize.consumeItem();
 
 		// Save changes
-		cardService.save(card);
+		cardService.saveCard(card);
 		prizeCategoryService.savePrize(prize);
 	}
 
-	
-
-//  public void transferCredits(Card sourceCard, Card targetCard, int amount) {
-//  if (sourceCard == null || targetCard == null) {
-//      throw new RuntimeException("Both source and target cards must exist");
-//  }
-//  
-//  if (sourceCard.getCreditBalance() < amount) {
-//      throw new RuntimeException("Source card has insufficient credits to transfer");
-//  }
-//  
-//  targetCard.setCreditBalance(targetCard.getCreditBalance() + amount);
-//  sourceCard.setCreditBalance(sourceCard.getCreditBalance() - amount);
-//  
-//  // Save changes
-//  cardService.createCard(sourceCard);
-//  cardService.createCard(targetCard);
-//}
-//
-//public void transferTickets(Card sourceCard, Card targetCard, int amount) {
-//  if (sourceCard == null || targetCard == null) {
-//      throw new RuntimeException("Both source and target cards must exist");
-//  }
-//  
-//  if (sourceCard.getTicketBalance() < amount) {
-//      throw new RuntimeException("Source card has insufficient tickets to transfer");
-//  }
-//  
-//  targetCard.setTicketBalance(targetCard.getTicketBalance() + amount);
-//  sourceCard.setTicketBalance(sourceCard.getTicketBalance() - amount);
-//  
-//  // Save changes
-//  cardService.createCard(sourceCard);
-//  cardService.createCard(targetCard);
-//}
 }

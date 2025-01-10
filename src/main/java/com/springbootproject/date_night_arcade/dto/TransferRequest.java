@@ -1,4 +1,4 @@
-package com.springbootproject.date_night_arcade.model;
+package com.springbootproject.date_night_arcade.dto;
 
 //DTO(Data Transfer Object)
 //The TransferRequest class only contains the relevant information required to perform the transfer.
