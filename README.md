@@ -3,34 +3,51 @@
 		
 ```mermaid
 classDiagram
-    class User {
-        - Long id
-        - String name
-        - String email
-        + getId() Long
-        + setId(Long id)
-        + getName() String
-        + setName(String name)
-        + getEmail() String
-        + setEmail(String email)
+    class Card {
+        - int cardId
+        - int creditBalance
+        - int ticketBalance
+        + Card()
+        + getCardId() int
+        + setCardId(int)
+        + getCreditBalance() int
+        + setCreditBalance(int)
+        + getTicketBalance() int
+        + setTicketBalance(int)
+        + toString() String
     }
 
-    class UserController {
-        - UserService userService
-        + getAllUsers(Model model) String
+    class CardRepo {
+        + findAll() : List<Card>
+        + save(Card) : Card
+        + findById(int) : Optional<Card>
+        + deleteById(int) : void
     }
 
-    class UserService {
-        - UserRepository userRepository
-        + getAllUsers() List<User>
+    class CardService {
+        - CardRepo repo
+        + getAllCards() : List<Card>
+        + createCard(Card) : Card
+        + addCredits(int, Integer) : Card
+        + decrementCredits(int, Integer) : Card
+        + getCard(int) : Card
+        + saveCard(Card) : Card
+        + deleteGame(int) : void
     }
 
-    class UserRepository {
-        + findAll() List<User>
+    class CardController {
+        - CardService service
+        + getAllCards() : List<Card>
+        + createCard(Card) : Card
+        + addCredits(int, Map<String, Integer>) : Card
+        + decrementCredits(int, Map<String, Integer>) : Card
+        + deleteGame(int) : void
+        + getCard(int) : Card
+        + getCardById(int) : ResponseEntity<Card>
     }
 
-    UserController --> UserService : uses
-    UserService --> UserRepository : uses
-    User "1" --> "*" UserRepository : dependency
+    CardRepo --> Card : manages
+    CardService --> CardRepo : uses
+    CardController --> CardService : uses
 
 
