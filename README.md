@@ -105,7 +105,7 @@ classDiagram
 		+ consumeItem() void
     }
 	
-	calss PrizeCategoryRepo{
+	class PrizeCategoryRepo {
 		<<interface>>
 	}
 	PrizeCategoryRepo ..> PrizeCategory : manages
