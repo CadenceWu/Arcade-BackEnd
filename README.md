@@ -9,8 +9,4 @@ classDiagram
         +void eat()
         +void sleep()
     }
-    class Dog {
-        +String breed
-        +void bark()
-    }
-    Animal <|-- Dog
+
